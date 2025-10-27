@@ -26,14 +26,14 @@ def index(request):
 
 class BookListView(generic.ListView):
     model = Book
-    paginate_by = 10
+    paginate_by = 2
 
 class BookDetailView(generic.DetailView):
     model = Book
 
 class AuthorListView(generic.ListView):
     model = Author
-    paginate_by = 10
+    paginate_by = 2
 
 class AuthorDetailView(generic.DetailView):
     model = Author
