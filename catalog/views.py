@@ -79,7 +79,6 @@ class LoanedBookListView(LoginRequiredMixin,generic.ListView):
                 .filter(status__exact='o')
                 .order_by('due_back'))
 
-
 class LoanedBooksAllListView(PermissionRequiredMixin,generic.ListView):
     model = BookInstance
     permission_required = 'catalog.can_mark_returned'
