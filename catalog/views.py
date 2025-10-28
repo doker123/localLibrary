@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
 from .models import Book, Author, BookInstance
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -37,3 +38,7 @@ class AuthorListView(generic.ListView):
 
 class AuthorDetailView(generic.DetailView):
     model = Author
+
+@login_required
+def my_books(request):
+    pass
