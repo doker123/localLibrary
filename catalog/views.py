@@ -181,3 +181,4 @@ class BookDelete(PermissionRequiredMixin, DeleteView):
             return HttpResponseRedirect(
                 reverse("book_delete", kwargs={"pk": self.object.pk})
             )
+
