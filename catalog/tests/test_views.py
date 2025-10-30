@@ -210,7 +210,7 @@ class RenewBookInstancesViewTest(TestCase):
         test_user2 = User.objects.create_user(
             username='testuser2', password='2HJ1vRV0Z&3iD')
         test_user2.save()
-        permission = Permission.objects.get(name='Set book as returned')
+        permission = Permission.objects.get(codename='can_mark_returned')
         test_user2.user_permissions.add(permission)
         test_user2.save()
 
@@ -239,7 +239,7 @@ class RenewBookInstancesViewTest(TestCase):
 
     def test_redirect_if_not_logged_in(self):
         response = self.client.get(
-            reverse('renew-book-librarian', kwargs={'pk': self.test_bookinstance1.pk}))
+            reverse('renew_book_librarian', kwargs={'pk': self.test_bookinstance1.pk}))
         # Manually check redirect (Can't use assertRedirect, because the redirect URL is unpredictable)
         self.assertEqual(response.status_code, 302)
         self.assertTrue(response.url.startswith('/accounts/login/'))
@@ -248,7 +248,7 @@ class RenewBookInstancesViewTest(TestCase):
         login = self.client.login(
             username='testuser1', password='1X<ISRUkw+tuK')
         response = self.client.get(
-            reverse('renew-book-librarian', kwargs={'pk': self.test_bookinstance1.pk}))
+            reverse('renew_book_librarian', kwargs={'pk': self.test_bookinstance1.pk}))
         self.assertEqual(response.status_code, 403)
 
     def test_logged_in_with_permission_borrowed_book(self):
@@ -316,9 +316,9 @@ class RenewBookInstancesViewTest(TestCase):
         login = self.client.login(
             username='testuser2', password='2HJ1vRV0Z&3iD')
         valid_date_in_future = datetime.date.today() + datetime.timedelta(weeks=2)
-        response = self.client.post(reverse('renew-book-librarian', kwargs={'pk': self.test_bookinstance1.pk}),
+        response = self.client.post(reverse('renew_book_librarian', kwargs={'pk': self.test_bookinstance1.pk}),
                                     {'renewal_date': valid_date_in_future})
-        self.assertRedirects(response, reverse('all-borrowed'))
+        self.assertRedirects(response, reverse('borrowed'))
 
     def test_HTTP404_for_invalid_book_if_logged_in(self):
         import uuid
